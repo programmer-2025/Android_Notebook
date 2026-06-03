@@ -1,5 +1,6 @@
 package android.notebook;
 
+import android.notebook.adapter.NoteBookDataPreviewAdapter;
 import android.notebook.adapter.NotebookTagAdapter;
 import android.os.Bundle;
 
@@ -33,5 +34,9 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = drawerLayout.findViewById(R.id.navigation_view).findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new NotebookTagAdapter(Arrays.asList("Tag1", "Tag2", "Tag3")));
+
+        RecyclerView notebookDataPreviewRecycler = findViewById(R.id.notebook_dataPreview_recycler);
+        notebookDataPreviewRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        notebookDataPreviewRecycler.setAdapter(new NoteBookDataPreviewAdapter(Arrays.asList("Tag1", "Tag2", "Tag3")));
     }
 }
