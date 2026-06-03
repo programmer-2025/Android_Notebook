@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_menu_layout"
     android:fitsSystemWindows="true"
-    android:background="#403D3D">
+    android:background="#DBD6D6">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

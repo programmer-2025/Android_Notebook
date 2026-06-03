@@ -1,6 +1,9 @@
 package android.notebook.adapter;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.notebook.R;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,11 +12,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NotebookTagAdapter extends RecyclerView.Adapter<NotebookTagAdapter.ViewHolder> {
 
+    private List<MaterialButton> materialButtons = new ArrayList<>();
     private List<String> tagList = new ArrayList<>();
 
     public NotebookTagAdapter(List<String> list) {
@@ -31,7 +39,18 @@ public class NotebookTagAdapter extends RecyclerView.Adapter<NotebookTagAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView.setText(tagList.get(position));
+        MaterialButton materialButton = holder.materialButton;
+        materialButton.setText(tagList.get(position));
+        materialButtons.add(materialButton);
+        materialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (View view : materialButtons) {
+                    view.setBackgroundTintList(ColorStateList.valueOf(Color.WHITE));
+                }
+                v.setBackgroundTintList(ColorStateList.valueOf(Color.GRAY));
+            }
+        });
     }
 
     @Override
@@ -41,12 +60,12 @@ public class NotebookTagAdapter extends RecyclerView.Adapter<NotebookTagAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textView;
+        public MaterialButton materialButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            textView = itemView.findViewById(R.id.tag_textView);
+            materialButton = itemView.findViewById(R.id.button);
         }
     }
 }
