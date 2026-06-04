@@ -8,6 +8,7 @@
     <com.google.android.material.button.MaterialButton
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:id="@+id/newNotebook"
         android:text="＋"
         app:cornerRadius="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

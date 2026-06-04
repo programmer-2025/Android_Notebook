@@ -4,6 +4,7 @@ import android.notebook.adapter.NoteBookDataPreviewAdapter;
 import android.notebook.adapter.NotebookTagAdapter;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.notebook.R;
+
+import com.google.android.material.button.MaterialButton;
 
 import java.util.Arrays;
 
@@ -32,6 +35,8 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
         DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
         RecyclerView recyclerView = drawerLayout.findViewById(R.id.navigation_view).findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -40,6 +45,17 @@ public class HomeFragment extends Fragment {
         RecyclerView notebookDataPreviewRecycler = view.findViewById(R.id.notebook_dataPreview_recycler);
         notebookDataPreviewRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         notebookDataPreviewRecycler.setAdapter(new NoteBookDataPreviewAdapter(Arrays.asList("Tag1", "Tag2", "Tag3")));
+
+        ConstraintLayout homeView = drawerLayout.findViewById(R.id.homeView);
+        ConstraintLayout bottomView = homeView.findViewById(R.id.bottomView);
+        MaterialButton materialButton = bottomView.findViewById(R.id.newNotebook);
+        materialButton.setOnClickListener(v -> {
+            getFragmentManager().beginTransaction()
+                    .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                    .replace(R.id.fragmentContainerView, new NotebookFragment())
+                    .commit();
+        });
+
     }
 
     @Override
