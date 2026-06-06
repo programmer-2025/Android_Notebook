@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.notebook.R;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.Arrays;
 
@@ -38,9 +39,22 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         DrawerLayout drawerLayout = view.findViewById(R.id.drawer_layout);
-        RecyclerView recyclerView = drawerLayout.findViewById(R.id.navigation_view).findViewById(R.id.recyclerView);
+        NavigationView navigationView = drawerLayout.findViewById(R.id.navigation_view);
+        RecyclerView recyclerView = navigationView.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(new NotebookTagAdapter(Arrays.asList("Tag1", "Tag2", "Tag3")));
+
+        ConstraintLayout includeDrawer = navigationView.findViewById(R.id.include_drawer_layout);
+        MaterialButton addTagButton = includeDrawer.findViewById(R.id.addTagButton);
+        addTagButton.setOnClickListener(v -> {
+            drawerLayout.close();
+            if (!(getFragmentManager().findFragmentById(R.id.fragmentContainerView) instanceof TagEditFragment)) {
+                getFragmentManager().beginTransaction()
+                        .setCustomAnimations(R.anim.slide_in, R.anim.fade_out, R.anim.fade_in, R.anim.slide_out)
+                        .add(R.id.fragmentContainerView, new TagEditFragment())
+                        .commit();
+            }
+        });
 
         RecyclerView notebookDataPreviewRecycler = view.findViewById(R.id.notebook_dataPreview_recycler);
         notebookDataPreviewRecycler.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
